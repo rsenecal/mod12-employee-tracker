@@ -1,5 +1,7 @@
 const inquirer = require('inquirer');
 
+
+
 const mysql = require('mysql2');
 
 const connection = mysql.createConnection({
@@ -46,7 +48,7 @@ const mainMenu = () => {
             allRoles();
             break;
         case "Add Role":
-            eaddRole();
+            addRole();
             break;
         case "View All Departments":
             allDepartments();
@@ -65,6 +67,42 @@ const mainMenu = () => {
 }
 
 
+
+const promptEmployee = ()  => {
+    console.log('Add a new employee');
+
+    return inquirer.prompt ([
+
+    {
+        type: 'input',
+        name: 'first_name',
+        message: "Please the employee's first name: ",
+        validate: first_name => {
+            if (first_name) {
+                return true
+            } else {
+                console.log('Please try again, Enter Empoyee first name: ')
+            }
+        }
+    },
+    {
+        type: 'input',
+        name: 'first_name',
+        message: "Please the employee's first name: ",
+        validate: first_name => {
+            if (first_name) {
+                return true
+            } else {
+                console.log('Please try again, Enter Empoyee first name: ')
+            }
+        }
+    },
+    
+
+
+    ])
+
+}
 
 function addEmployee() {    
     connection.connect(function(err){
