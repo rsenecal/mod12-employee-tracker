@@ -98,23 +98,70 @@ const promptEmployee = ()  => {
         }
     },
     
-
-
     ])
+    .then(answer => {
+        const empData = [answer.first_name, answer.last_name];
+        const mngQuery = 'SELECT * FROM employee WHERE ismanager = true';
+        connection.promise().query(mngQuery, (err, data)=> {
+            if(err) throw err;
+            const mngList = data.map(({id, first_name, last_name}) =>({name:first_name + " " + last_name, value: id}));
+            inquirer.prompt ([
+                {
+                    type: 'list',
+                    name: 'manager',
+                    message: "Select the name of your manager.",
+                    choices: mngList
+                }
+            ])
+            .then(selectedManager => {
+                const empManager = selectedManager.manager;
+                empData.push(empManager);
+                const roleQuery = 'SELECT id, title FROM role';
+                connection.promise().query(roleQuery, (err, data) => {
+                    if(err) throw err;
+                    const roleList = data.map(({id, title}) => ({name: title, value: id}));
+                    inquirer.prompt ([
+                        {
+                            type: 'list',
+                            name: 'role',
+                            message: "Select your employee's role.",
+                            choices: roleList 
+                        }
+                    ])
+                    .then(selectedRole => {
+                        const empRole = selectedRole.role;
+                        empData.push(empRole);
+                       
+                        const addEmpQuery = `INSERT INTO employee (first_name, last_name, manager_id, role_id)
+                        VALUES (?, ?, ?, ?)`;
+                       
+                        connection.query(addEmpQuery, empData, (err) => {
+                            if(err) throw err;
+                        console.log("Employee Added: ");
+                        mainMenu();
+                        });
 
-}
+                    });
+                });
+            });
 
-function addEmployee() {    
-    connection.connect(function(err){
-        if (err) throw err;
-        console.log("connected !!");
-        var sql = "INSERT INTO employee (first_name, last_name, manager_id, role_id) VALUES ('JESSICA', 'Senecal', 2, 1)";
-        connection.query(sql, function(err, result) {
-            if (err) throw err;
-            console.log("1 Record Added");
         });
     });
-}
+
+};
+
+// // Testing that connection to the database is working.. to be commented out later
+// function addEmployee() {    
+//     connection.connect(function(err){
+//         if (err) throw err;
+//         console.log("connected !!");
+//         var sql = "INSERT INTO employee (first_name, last_name, manager_id, role_id) VALUES ('JESSICA', 'Senecal', 2, 1)";
+//         connection.query(sql, function(err, result) {
+//             if (err) throw err;
+//             console.log("1 Record Added");
+//         });
+//     });
+// }
     // function addEmployee() {
     
 
