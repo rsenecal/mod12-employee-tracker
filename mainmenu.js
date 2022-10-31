@@ -124,7 +124,7 @@ const promptEmployee = ()  => {
     .then(answer => {
         const empData = [answer.first_name, answer.last_name];
         const mngQuery = 'SELECT * FROM employee WHERE ismanager = true';
-        connection.promise().query(mngQuery, (err, data)=> {
+        connection.query(mngQuery, (err, data)=> {
             if(err) throw err;
             const mngList = data.map(({id, first_name, last_name}) =>({name:first_name + " " + last_name, value: id}));
             inquirer.prompt ([
@@ -139,7 +139,7 @@ const promptEmployee = ()  => {
                 const empManager = selectedManager.manager;
                 empData.push(empManager);
                 const roleQuery = 'SELECT id, title FROM role';
-                connection.promise().query(roleQuery, (err, data) => {
+                connection.query(roleQuery, (err, data) => {
                     if(err) throw err;
                     const roleList = data.map(({id, title}) => ({name: title, value: id}));
                     inquirer.prompt ([
