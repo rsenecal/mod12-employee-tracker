@@ -195,13 +195,14 @@ function allEmployee() {
     connection.connect(function(err){
         if (err) throw err;
         console.log("connected !!");
-        var sql = `select e.*, r.title, r.salary, d.department_name
-
-        from employee e
-        join role r
-        on e.role_id = r.id
-        join department d
-        on d.id = r.department_id`;
+        var sql = `SELECT e.*, r.title, r.salary, d.department_name, CONCAT(m.first_name,' ', m.last_name) as Manager
+        FROM employee e
+        LEFT JOIN employee m
+        ON e.id = m.manager_id
+        JOIN role r
+        ON e.role_id = r.id
+        JOIN department d
+        ON d.id = r.department_id`;
         connection.query(sql, function(err, result) {
             if (err) throw err;
             console.table(result);
