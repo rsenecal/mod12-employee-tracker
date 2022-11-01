@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
-// const logo = require('asciiart-logo');
-// const config = require('./package.json');
+const logo = require('asciiart-logo');
+const config = require('./package.json');
 
 const mysql = require('mysql2');
 
@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
 
 
 
-// console.log(logo(config).render());
+console.log(logo(config).render());
 
 
 const mainMenu = () => {
@@ -47,6 +47,10 @@ const mainMenu = () => {
                 new inquirer.Separator('= Update =='),
                 {
                     name: 'Update Employee Role',
+                },
+                new inquirer.Separator('= Quit App =='),
+                {
+                    name: 'Quit',
                 },
               ],
         }
@@ -81,8 +85,6 @@ const mainMenu = () => {
         case "Quit":
             quitApp();
             break;
-        default:
-            quitApp ();
         
     }
 })
@@ -123,8 +125,8 @@ const promptEmployee = ()  => {
     ])
     .then(answer => {
         const empData = [answer.first_name, answer.last_name];
-        const mngQuery = 'SELECT * FROM employee WHERE ismanager = true';
-        connection.promise().query(mngQuery, (err, data)=> {
+        const mngQuery = 'SELECT * FROM employee';
+        connection.query(mngQuery, (err, data)=> {
             if(err) throw err;
             const mngList = data.map(({id, first_name, last_name}) =>({name:first_name + " " + last_name, value: id}));
             inquirer.prompt ([
@@ -139,7 +141,7 @@ const promptEmployee = ()  => {
                 const empManager = selectedManager.manager;
                 empData.push(empManager);
                 const roleQuery = 'SELECT id, title FROM role';
-                connection.promise().query(roleQuery, (err, data) => {
+                connection.query(roleQuery, (err, data) => {
                     if(err) throw err;
                     const roleList = data.map(({id, title}) => ({name: title, value: id}));
                     inquirer.prompt ([
@@ -187,5 +189,24 @@ const promptEmployee = ()  => {
     // function addEmployee() {
     
 
+
+
+function allEmployee() {
+    connection.connect(function(err){
+        if (err) throw err;
+        console.log("connected !!");
+        var sql = `select e.*, r.title, r.salary, d.department_name
+
+        from employee e
+        join role r
+        on e.role_id = r.id
+        join department d
+        on d.id = r.department_id`;
+        connection.query(sql, function(err, result) {
+            if (err) throw err;
+            console.table(result);
+        });
+    });
+}
 
 module.exports = mainMenu;
