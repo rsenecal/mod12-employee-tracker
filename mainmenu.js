@@ -52,6 +52,8 @@ const mainMenu = () => {
                 {
                     name: 'Quit',
                 },
+
+                new inquirer.Separator()
               ],
         }
     ])
@@ -69,18 +71,18 @@ const mainMenu = () => {
             break;
 
         case "Update Employee Role":
-            updateEployee();
+            updateEmployeeRole();
             break;
 
         case "Add Employee":
-            promptEmployee();
+            addEmployee();
             break;
         case "Add Role":
-                addRole();
+            addRole();
         break;
 
         case "Add Department":
-            addDepartments();
+            addDepartment();
             break;
         case "Quit":
             quitApp();
@@ -92,7 +94,8 @@ const mainMenu = () => {
 
 
 
-const promptEmployee = ()  => {
+
+const addEmployee = ()  => {
     console.log('Add a new employee');
 
     return inquirer.prompt ([
@@ -174,19 +177,92 @@ const promptEmployee = ()  => {
 
 };
 
-// // Testing that connection to the database is working.. to be commented out later
-// function addEmployee() {    
-//     connection.connect(function(err){
-//         if (err) throw err;
-//         console.log("connected !!");
-//         var sql = "INSERT INTO employee (first_name, last_name, manager_id, role_id) VALUES ('JESSICA', 'Senecal', 2, 1)";
-//         connection.query(sql, function(err, result) {
-//             if (err) throw err;
-//             console.log("1 Record Added");
-//         });
-//     });
-// }
-    // function addEmployee() {
+function addDepartment() {
+    console.log('Add a new Department');
+
+    return inquirer.prompt ([
+
+    {
+        type: 'input',
+        name: 'deptName',
+        message: "Please Enter the name of the department: ",
+        validate: deptName => {
+            if (deptName) {
+                return true
+            } else {
+                console.log('Please try again, Enter Department Name: ')
+            }
+        }
+    }
+    
+    ])
+    .then(answer => {
+        const deptData = answer.deptName;
+        const addDeptQuery = 'INSERT INTO department (department_name) VALUES (?) ';
+        connection.query(addDeptQuery, deptData, (err, data)=> {
+        if(err) throw err;
+        console.log("Depatment Added: ");
+        mainMenu();
+        });
+
+    });
+    }
+
+function addRole() {
+    console.log('Add a new Role');
+
+    return inquirer.prompt ([
+
+    {
+        type: 'input',
+        name: 'roleName',
+        message: "Please Enter the name ot title of the Role: ",
+        validate: roleName => {
+            if (roleName) {
+                return true
+            } else {
+                console.log('Please try again, Enter Role Name or Title: ')
+            }
+        }
+    },
+    {
+        type: 'number',
+        name: 'roleSalary',
+        message: "Please the salary for this role: ",
+    },
+    
+    ])
+    .then(answer => {
+        const roleData = [answer.roleName, answer.roleSalary];
+        const deptQuery = 'SELECT * FROM department';
+        connection.query(deptQuery, (err, data)=> {
+            if(err) throw err;
+            const deptList = data.map(({id, department_name}) =>({name: department_name, value: id}));
+            inquirer.prompt ([
+                {
+                    type: 'list',
+                    name: 'department',
+                    message: "Select the  department for this role.",
+                    choices: deptList
+                }
+            ])
+            .then(selectedDept => {
+                const roleDept = selectedDept.department;
+                roleData.push(roleDept);            
+                const addRoleQuery = `INSERT INTO role (title, salary, department_id)
+                VALUES (?, ?, ?)`;
+               
+                connection.query(addRoleQuery, roleData, (err) => {
+                if(err) throw err;
+                console.log("Role Added: ");
+                mainMenu();
+                        });
+
+                    });
+                });
+            });
+
+}
     
 
 
@@ -245,4 +321,9 @@ mainMenu()
 }
 
 
+function quitApp(){
+    console.log("BYE,BYE ........................")
+    process.exit()
+
+}
 module.exports = mainMenu;
