@@ -191,7 +191,7 @@ Distributed under the MIT License.
 
 Your Name - [@@roodysenecal](https://twitter.com/@roodysenecal) - roodysenecal@gamil.com@email_client.com
 
-Project Link: [https://github.com/rsenecal/mod11-note-taker](https://github.com/rsenecal/mod11-note-taker)
+Project Link: [https://github.com/rsenecal/mod12-employee-tracker](https://github.com/rsenecal/mod12-employee-tracker)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
