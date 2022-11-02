@@ -77,6 +77,13 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
+## Video Walk-Thru
+
+
+
+https://user-images.githubusercontent.com/50510/199387312-5f06d139-acb6-4f85-9f7c-d107c1cb3fef.mp4
+
+
 
 ### Built With
 
