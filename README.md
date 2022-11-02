@@ -68,7 +68,8 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img width="1491" alt="note-take-home-page" src="https://user-images.githubusercontent.com/50510/198796654-01b1d345-4054-457c-93a7-f7d7145e2a59.png">
+<img width="2048" alt="Screenshot 2022-11-01 at 11 11 38 PM" src="https://user-images.githubusercontent.com/50510/199386750-f40e282a-3282-44bb-a0c9-3cf6a0c4a6c0.png">
+
 
 
 Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `rsenecal`, `mod12-employee-tracker`, `@roodysenecal`, `linkedin_username`, `email_client`, `roodysenecal@gamil.com`, `Employee Tracker`, `project_description`
