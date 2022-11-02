@@ -121,12 +121,12 @@ You will need a mordern browser.
 5. Run the schema.sql and the seeds.sql  
   From your MySQL prompt: 
   run 
-  ``` source schema.sql
+  ``` source schema.sql ```
   then
-  ``` source seeds.sql
+  ``` source seeds.sql```
  6. Type:
-  ``` node index
-  to run app
+  ``` node index```
+  to run the app
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
