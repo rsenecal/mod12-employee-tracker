@@ -202,12 +202,47 @@ function allEmployee() {
         JOIN role r
         ON e.role_id = r.id
         JOIN department d
-        ON d.id = r.department_id`;
+        ON d.id = r.department_id;`;
         connection.query(sql, function(err, result) {
             if (err) throw err;
             console.table(result);
         });
     });
+    mainMenu()
 }
+
+ 
+function allRoles() {
+
+    connection.connect(function(err){
+        if (err) throw err;
+        console.log("connected !!");
+        var sql = `SELECT r.id, r.title, r.salary, d.department_name
+        FROM role r
+        LEFT JOIN department d
+        ON r.department_id = d.id;`;
+        connection.query(sql, function(err, result) {
+            if (err) throw err;
+            console.table(result);
+        });
+    });
+    mainMenu()
+
+}
+
+function allDepartments() {
+connection.connect(function(err){
+    if (err) throw err;
+    console.log("connected !!");
+    var sql = `SELECT * from department; `;
+    connection.query(sql, function(err, result) {
+        if (err) throw err;
+        console.table(result);
+    });
+});
+mainMenu()
+    
+}
+
 
 module.exports = mainMenu;
