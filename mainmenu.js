@@ -53,7 +53,7 @@ const mainMenu = () => {
                     name: 'Quit',
                 },
 
-                new inquirer.Separator()
+                new inquirer.Separator('=============', '\n', '\n')
               ],
         }
     ])
@@ -91,6 +91,59 @@ const mainMenu = () => {
     }
 })
 }
+
+
+const  updateEmployeeRole = ()  => {
+    console.log('Update employee Role');
+
+    return inquirer.prompt ([
+    
+    ])
+    .then(answer => {
+        const empData = [];
+        const allEmpQuery = 'SELECT * FROM employee';
+        connection.query(allEmpQuery, (err, data)=> {
+            if(err) throw err;
+            console.log(data);
+            const empList = data.map(({id, first_name, last_name}) =>({name:first_name + " " + last_name, value: id}));
+            inquirer.prompt ([
+                {
+                    type: 'list',
+                    name: 'allEmp',
+                    message: "Select the name of the employee you want to update.",
+                    choices: empList
+                }
+            ])
+            .then(selectedEmp => {
+                const emp = selectedEmp.allEmp;
+                empData.push(emp);
+                const roleQuery = 'SELECT id, title FROM role';
+                connection.query(roleQuery, (err, data) => {
+                    if(err) throw err;
+                    const roleList = data.map(({id, title}) => ({name: title, value: id}));
+                    inquirer.prompt ([
+                        {
+                            type: 'list',
+                            name: 'role',
+                            message: "Select the new role. for this employee",
+                            choices: roleList 
+                        }
+                    ])
+                    .then(selectedRole => {
+                        const empRole = selectedRole.role;
+                        empData.push(empRole);
+                       
+                        console.log(empData)
+                        mainMenu();
+                        });
+
+                    });
+                });
+            });
+
+        });
+    };
+
 
 
 
@@ -284,12 +337,12 @@ function allEmployee() {
             console.table(result);
         });
     });
+
     mainMenu()
 }
 
  
 function allRoles() {
-
     connection.connect(function(err){
         if (err) throw err;
         console.log("connected !!");
@@ -299,12 +352,14 @@ function allRoles() {
         ON r.department_id = d.id;`;
         connection.query(sql, function(err, result) {
             if (err) throw err;
+            console.log('\n');
             console.table(result);
         });
     });
     mainMenu()
 
 }
+
 
 function allDepartments() {
 connection.connect(function(err){
