@@ -98,7 +98,7 @@ https://user-images.githubusercontent.com/50510/199387312-5f06d139-acb6-4f85-9f7
 ## Getting Started
 
 To get started with the Note Take App: You will need to run it from your terminal make sure to have node installed. 
-![NodeJS Download](https://nodejs.org/en/download/)
+[NodeJS Download](https://nodejs.org/en/download/)
 
 ### Prerequisites
 
@@ -116,7 +116,7 @@ You will need a mordern browser.
    npm install
    ```
 4. Install MySQL 
-   ![MySQL Download](https://dev.mysql.com/downloads/installer/)
+   [MySQL Download](https://dev.mysql.com/downloads/installer/)
 
 5. Run the schema.sql and the seeds.sql  
   From your MySQL prompt: 
@@ -189,7 +189,11 @@ Distributed under the MIT License.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@@roodysenecal](https://twitter.com/@roodysenecal) - roodysenecal@gamil.com@email_client.com
+<strong>Roodolph Senecal</strong>
+
+Twitter: [@roodysenecal](https://twitter.com/@roodysenecal)
+
+Email: roodysenecal@gamil.com
 
 Project Link: [https://github.com/rsenecal/mod12-employee-tracker](https://github.com/rsenecal/mod12-employee-tracker)
 
